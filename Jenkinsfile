@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "node18"   // 👈 match the name you set in Jenkins
+        nodejs "node18"   
     }
 
     stages {
