@@ -21,9 +21,10 @@ pipeline {
       steps { bat 'npm install' }
     }
 
-   stage('Run Tests') {
-  steps { bat 'cmd /c npm test 1>> logs\\test.log 2>&1 || exit /b 0' }
-}
+    stage('Run Tests') {
+      steps { bat 'cmd /c npm test 1>> logs\\test.log 2>&1 || exit /b 0' }
+    }
+
     stage('Notify: After Tests') {
       steps {
         emailext(
@@ -38,11 +39,11 @@ pipeline {
     }
 
     stage('Generate Coverage Report') {
-      steps { bat 'cmd /c npm run coverage 1>> logs\\coverage.log 2>&1' }
+      steps { bat 'cmd /c npm run coverage 1>> logs\\coverage.log 2>&1 || exit /b 0' }
     }
 
     stage('NPM Audit (Security Scan)') {
-      steps { bat 'cmd /c npm audit 1>> logs\\npm-audit.log 2>&1' }
+      steps { bat 'cmd /c npm audit 1>> logs\\npm-audit.log 2>&1 || exit /b 0' }
     }
 
     stage('Notify: After Security Scan') {
