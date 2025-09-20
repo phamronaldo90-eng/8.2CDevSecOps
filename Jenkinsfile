@@ -1,5 +1,9 @@
 pipeline {
   agent any
+  tools { nodejs 'node18' }   // thêm dòng này
+
+pipeline {
+  agent any
   options { timestamps() }
 
   environment {
