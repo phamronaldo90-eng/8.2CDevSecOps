@@ -4,7 +4,7 @@ pipeline {
   options { timestamps() }
 
   environment {
-    RECIPIENTS = 'ppn02072005@gmail.com'
+  RECIPIENTS = 'ppn02072005+ci@gmail.com'
     FROM_ADDR  = 'ppn02072005@gmail.com'
     REPO_URL   = 'https://github.com/phamronaldo90-eng/8.2CDevSecOps.git'
   }
