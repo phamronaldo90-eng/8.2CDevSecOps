@@ -29,7 +29,7 @@ pipeline {
       steps {
         emailext(
           from: "${env.FROM_ADDR}",
-          to:   "${env.RECIPIENTS}",
+          to: "${env.RECIPIENTS}",
           subject: "Jenkins - Tests stage: ${currentBuild.fullDisplayName}",
           body: "Tests stage finished. See attached test log.",
           attachmentsPattern: "logs/test.log",
@@ -43,41 +43,4 @@ pipeline {
     }
 
     stage('NPM Audit (Security Scan)') {
-      steps { bat 'cmd /c "npm audit 1>> logs\\npm-audit.log 2>&1" || exit /b 0' }
-    }
-
-    stage('Notify: After Security Scan') {
-      steps {
-        emailext(
-          from: "${env.FROM_ADDR}",
-          to:   "${env.RECIPIENTS}",
-          subject: "Jenkins - Security Scan stage: ${currentBuild.fullDisplayName}",
-          body: "Security Scan finished. See attached npm-audit log.",
-          attachmentsPattern: "logs/npm-audit.log",
-          attachLog: false
-        )
-      }
-    }
-
-    stage('Archive Logs (optional)') {
-      steps {
-        archiveArtifacts artifacts: 'logs/*.log', fingerprint: true, onlyIfSuccessful: false
-      }
-    }
-  }
-
-  post {
-    failure {
-      emailext(
-        from: "${env.FROM_ADDR}",
-        to:   "${env.RECIPIENTS}",
-        subject: "Jenkins - BUILD FAILED: ${currentBuild.fullDisplayName}",
-        body: "Build failed. Console log attached.",
-        attachLog: true
-      )
-    }
-    success {
-      emailext(
-        from: "${env.FROM_ADDR}",
-        to:   "${env.RECIPIENTS}",
-        subject: "Jen
+      steps { bat 'cmd /c "npm audit 1>> logs\\npm-audit.log 2
