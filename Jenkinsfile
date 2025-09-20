@@ -1,35 +1,27 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/phamronaldo90-eng/8.2CDevSecOps.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'npm test || true'
-            }
-        }
-
-        stage('Generate Coverage Report') {
-            steps {
-                sh 'npm run coverage || true'
-            }
-        }
-
-        stage('NPM Audit (Security Scan)') {
-            steps {
-                sh 'npm audit || true'
-            }
-        }
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: 'https://github.com/phamronaldo90-eng/8.2CDevSecOps.git'
+      }
     }
+
+    stage('Install Dependencies') {
+      steps { bat 'npm install' }
+    }
+
+    stage('Run Tests') {
+      steps { bat 'npm test || exit /b 0' }
+    }
+
+    stage('Generate Coverage Report') {
+      steps { bat 'npm run coverage || exit /b 0' }
+    }
+
+    stage('NPM Audit (Security Scan)') {
+      steps { bat 'npm audit || exit /b 0' }
+    }
+  }
 }
