@@ -1,27 +1,39 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Checkout') {
-      steps {
-        git branch: 'main', url: 'https://github.com/phamronaldo90-eng/8.2CDevSecOps.git'
-      }
+    tools {
+        nodejs "node18"   // 👈 match the name you set in Jenkins
     }
 
-    stage('Install Dependencies') {
-      steps { bat 'npm install' }
-    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/phamronaldo90-eng/8.2CDevSecOps.git'
+            }
+        }
 
-    stage('Run Tests') {
-      steps { bat 'npm test || exit /b 0' }
-    }
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
 
-    stage('Generate Coverage Report') {
-      steps { bat 'npm run coverage || exit /b 0' }
-    }
+        stage('Run Tests') {
+            steps {
+                bat 'npm test || exit /b 0'
+            }
+        }
 
-    stage('NPM Audit (Security Scan)') {
-      steps { bat 'npm audit || exit /b 0' }
+        stage('Generate Coverage Report') {
+            steps {
+                bat 'npm run coverage || exit /b 0'
+            }
+        }
+
+        stage('NPM Audit (Security Scan)') {
+            steps {
+                bat 'npm audit || exit /b 0'
+            }
+        }
     }
-  }
 }
